@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{A9C68D1F-AED6-4C2F-B5DB-C44D48F63B7C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{269DCF1B-E4F1-42D1-A4BC-6858665C512F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{269DCF1B-E4F1-42D1-A4BC-6858665C512F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oesia.Infrastructure", "Oesia.Infrastructure\Oesia.Infrastructure.csproj", "{866A9006-141A-4F73-8A06-E33DAB58A506}"
 EndProject

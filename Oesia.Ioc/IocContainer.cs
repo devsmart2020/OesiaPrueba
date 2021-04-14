@@ -1,23 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Oesia.Repository.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Oesia.Repository.Interfaces;
 using Oesia.Repository.Repository;
 using Oesia.Service.Interfaces;
+using Oesia.Service.Mapping;
 using Oesia.Service.Services;
 
 namespace Oesia.Ioc
 {
     public static class IocContainer
     {
-        private static IConfiguration Configuration { get; }
-
         public static void ConfigureIOC(this IServiceCollection services)
         {
-            services.AddDbContext<db_oesiaContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("oesia"),
-            b => b.MigrationsAssembly("WebApi.Infrastructure.Data")));
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IAuthorService, AuthorService>();
