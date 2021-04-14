@@ -11,11 +11,11 @@ namespace Oesia.Domain.Entities
             TbAuthors = new HashSet<TbAuthor>();
         }
 
-        public int IdCity { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public int IdCountry { get; set; }
+        public int IdState { get; set; }
 
-        public virtual TbCountry IdCountryNavigation { get; set; }
+        public virtual TbState IdStateNavigation { get; set; }
         public virtual ICollection<TbAuthor> TbAuthors { get; set; }
     }
 }

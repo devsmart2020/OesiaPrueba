@@ -4,16 +4,16 @@
 
 namespace Oesia.Domain.Entities
 {
-    public partial class TbCountry
+    public partial class TbGender
     {
-        public TbCountry()
+        public TbGender()
         {
-            TbStates = new HashSet<TbState>();
+            TbAuthors = new HashSet<TbAuthor>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<TbState> TbStates { get; set; }
+        public virtual ICollection<TbAuthor> TbAuthors { get; set; }
     }
 }
