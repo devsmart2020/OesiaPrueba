@@ -184,10 +184,10 @@
                         SelectedItem="{Binding SelectedAuthor}"
                         Style="{DynamicResource MaterialDesignDataGrid}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Author}" Header="Author" />
-                            <DataGridTextColumn Binding="{Binding Country}" Header="Country" />
-                            <DataGridTextColumn Binding="{Binding Gender}" Header="Gender" />
-                            <DataGridTextColumn Binding="{Binding QuantityBooks}" Header="QuantityBooks" />
+                            <DataGridTextColumn Binding="{Binding Author}" Header="Autor" />
+                            <DataGridTextColumn Binding="{Binding Country}" Header="Nacionalidad" />
+                            <DataGridTextColumn Binding="{Binding Gender}" Header="Género" />
+                            <DataGridTextColumn Binding="{Binding QuantityBooks}" Header="Libros" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -294,6 +294,7 @@
                             Background="#FF34268A"
                             Command="{Binding CreateOrUpdateCommand}"
                             Content="GUARDAR"
+                            IsEnabled="{Binding IsEnabled}"
                             Style="{DynamicResource MaterialDesignRaisedDarkButton}" />
 
                         <Button
@@ -301,8 +302,9 @@
                             Margin="30,30"
                             VerticalAlignment="Center"
                             Background="Green"
-                            Command="{Binding CreateOrUpdateCommand}"
+                            Command="{Binding UpdateCommand}"
                             Content="ACTUALIZAR"
+                            IsEnabled="{Binding IsEnabledUpdate}"
                             Style="{DynamicResource MaterialDesignRaisedDarkButton}" />
 
                         <Button
@@ -319,7 +321,9 @@
                         Height="260"
                         VerticalAlignment="Top"
                         AutoGenerateColumns="False"
+                        IsReadOnly="True"
                         ItemsSource="{Binding BookList}"
+                        SelectedItem="{Binding SelectedBook}"
                         Style="{DynamicResource MaterialDesignDataGrid}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Book}" Header="Libro" />

@@ -27,11 +27,15 @@ namespace Oesia.Front.ViewModels.ViewModel
             _bookSvc = new GenericService<BookDTO>();
             _booklistSvc = new GenericService<BookListDTO>();
             CreateOrUpdateCommand = new RelayCommand(async () => await CreateOrUpdate());
+            UpdateCommand = new RelayCommand(async () => await Update());
+            DeleteCommand = new RelayCommand(async () => await Delete());
             GetEditorials().ConfigureAwait(true);
             GetAuthors().ConfigureAwait(true);
             GetAll().ConfigureAwait(true);
             WriteDate = DateTime.Today;
             LaunchDate = DateTime.Today;
+            IsEnabledUpdate = false;
+
         }
         #endregion
 
@@ -77,18 +81,77 @@ namespace Oesia.Front.ViewModels.ViewModel
                 IsBusy = false;
             }
         }
+        private async Task Update()
+        {
+            IsBusy = true;
+            BookDTO book = new BookDTO
+            {
+                Id = Id,
+                Name = NameBook,
+                WriteDate = WriteDate,
+                LaunchDate = LaunchDate,
+                Price = Price,
+                IdAuthor = IdAuthor,
+                IdEditorial = IdEditorial,
+                Remarks = Remarks
+            };
+            try
+            {
+                if (book != null)
+                {
+                    if (ValidateFields())
+                    {
+                        var query = await _bookSvc.Create(book, false, "api/Books/Update");
+                        if (query != null)
+                        {
+                            Msj = "Libro actualizado con éxito";
+                            await GetAll();
+                            ClearFields();
+                        }
+                        else
+                            Msj = "Error al actualizar el libro, por favor verifique que esté todo diligenciado";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Msj = ex.Message;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
         private async Task Delete()
         {
 
             IsBusy = true;
             try
             {
+                var query = await _authorSvc.Delete($"api/Books/{Id}");
+                if (query != null)
+                {
+                    Msj = "Datos eliminados con éxito";
+                    IsEnabledUpdate = false;
+                    IsEnabled = true;
+                    await GetAll();
+                    ClearFields();
+                }
+                else
+                {
+                    Msj = "Autor con libros asociados no se puede eliminar";
+                    IsEnabled = true;
+                    IsEnabledUpdate = false;
+                    ClearFields();
+                }
+
+
 
             }
             catch (Exception ex)
             {
-
-                throw;
+                Msj = ex.Message;
             }
             finally
             {
@@ -116,16 +179,34 @@ namespace Oesia.Front.ViewModels.ViewModel
 
         private async Task GetById()
         {
-
             IsBusy = true;
             try
             {
+                var book = await _bookSvc.GetById($"api/Books/GetById/{Id}");
+                if (book != null)
+                {
+                    Id = book.Id;
+                    NameBook = book.Name;
+                    WriteDate = book.WriteDate;
+                    LaunchDate = Convert.ToDateTime(book.LaunchDate);
+                    Price = book.Price;
+                    IdAuthor = book.IdAuthor;
+                    IdEditorial = book.IdEditorial;
+                    Remarks = book.Remarks;
 
+                    IsEnabled = false;
+                    IsEnabledUpdate = true;
+
+                }
+                else
+                {
+                    IsEnabled = true;
+                    IsEnabledUpdate = false;
+                }
             }
             catch (Exception ex)
             {
-
-                throw;
+                Msj = ex.Message;
             }
             finally
             {
@@ -285,10 +366,37 @@ namespace Oesia.Front.ViewModels.ViewModel
         }
 
 
+        private object selectedBook;
+
+        public object SelectedBook
+        {
+            get => selectedBook;
+            set
+            {
+                SetProperty(ref selectedBook, value);
+                if (selectedBook != null)
+                {
+                    Id = Convert.ToInt32(selectedBook.GetType().GetProperty("Id").GetValue(selectedBook, null));
+                    GetById().ConfigureAwait(true);
+                }
+            }
+
+        }
+
+        private bool isEnabledUpdate;
+
+        public bool IsEnabledUpdate
+        {
+            get => isEnabledUpdate;
+            set => SetProperty(ref isEnabledUpdate, value);
+        }
+
+
         #endregion
 
         #region Commands
         public ICommand CreateOrUpdateCommand { get; }
+        public ICommand UpdateCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand GetAllCommand { get; }
         public ICommand GetByIdCommand { get; }

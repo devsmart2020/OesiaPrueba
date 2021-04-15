@@ -45,6 +45,7 @@ namespace Oesia.Repository.Repository
         {
             var query = await _context.TbBooks.Select(x => new BookList
             {
+                Id = x.Id,
                 Book = x.Name,
                 DateWrite = x.WriteDate.ToShortDateString(),
                 Price = x.Price,

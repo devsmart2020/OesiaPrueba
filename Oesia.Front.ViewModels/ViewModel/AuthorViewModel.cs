@@ -488,9 +488,6 @@ namespace Oesia.Front.ViewModels.ViewModel
                     Id = Convert.ToInt32(selectedAuthor.GetType().GetProperty("Id").GetValue(selectedAuthor, null));
                     GetById().ConfigureAwait(true);
                 }
-                
-
-
             }
 
         }
