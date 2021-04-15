@@ -1,4 +1,5 @@
-﻿using Oesia.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Oesia.Domain.Entities;
 using Oesia.Repository.Data;
 using Oesia.Repository.Interfaces;
 using System.Collections.Generic;
@@ -22,9 +23,10 @@ namespace Oesia.Repository.Repository
         #endregion
 
         #region PublicMethods
-        public Task<IEnumerable<TbEditorial>> GetAllEditorials()
+        public async Task<IEnumerable<TbEditorial>> GetAllEditorials()
         {
-            throw new System.NotImplementedException();
+            return await _context.TbEditorials.FromSqlRaw("EXEC spr_getAllEditorials").ToListAsync();
+
         }
         #endregion
     }

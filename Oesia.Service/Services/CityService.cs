@@ -1,4 +1,5 @@
-﻿using Oesia.Infrastructure.DTOs;
+﻿using AutoMapper;
+using Oesia.Infrastructure.DTOs;
 using Oesia.Repository.Interfaces;
 using Oesia.Service.Interfaces;
 using System.Collections.Generic;
@@ -11,19 +12,21 @@ namespace Oesia.Service.Services
 
         #region Members Variables
         private readonly ICityRepository _repository;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public CityService(ICityRepository repository)
+        public CityService(ICityRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         #endregion
 
         #region PublicMethods
-        public Task<IEnumerable<CityDTO>> GetAllCities()
+        public async Task<IEnumerable<CityDTO>> GetAllCities()
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<IEnumerable<CityDTO>>(await _repository.GetAllCities());
         }
         #endregion
     }

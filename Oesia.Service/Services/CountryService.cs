@@ -1,4 +1,5 @@
-﻿using Oesia.Infrastructure.DTOs;
+﻿using AutoMapper;
+using Oesia.Infrastructure.DTOs;
 using Oesia.Repository.Interfaces;
 using Oesia.Service.Interfaces;
 using System.Collections.Generic;
@@ -11,21 +12,23 @@ namespace Oesia.Service.Services
 
         #region Members Variables
         private readonly ICountryRepository _repository;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public CountryService(ICountryRepository repository)
+        public CountryService(ICountryRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
-        
+
         #endregion
 
         #region PublicMethods
 
-        public Task<IEnumerable<CountryDTO>> GetAllCountries()
+        public async Task<IEnumerable<CountryDTO>> GetAllCountries()
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<IEnumerable<CountryDTO>>(await _repository.GetAllCountries());
         }
         #endregion
     }

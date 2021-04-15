@@ -48,6 +48,7 @@ namespace Oesia.Repository.Repository
 
             var query = await _context.TbAuthors.Select(x => new AuthorList
             {
+                Id = x.Id.ToString(),
                 Author = $"{x.Name} {x.LastName}",
                 Country = x.IdCityNavigation.IdStateNavigation.IdCountryNavigation.Name,
                 Gender = x.IdGenderNavigation.Name,

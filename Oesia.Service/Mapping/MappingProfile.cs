@@ -18,6 +18,12 @@ namespace Oesia.Service.Mapping
             CreateMap<CityDTO, TbCity>();
             CreateMap<TbCountry, CountryDTO>();
             CreateMap<CountryDTO, TbCountry>();
+            CreateMap<GenderDTO, TbGender>();
+            CreateMap<TbGender, GenderDTO>();
+            CreateMap<StateDTO, TbState>();
+            CreateMap<TbState, StateDTO>();
+            CreateMap<TbEditorial, EditorialDTO>();
+            CreateMap<EditorialDTO, TbEditorial>();
         }
     }
 }

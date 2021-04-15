@@ -1,4 +1,5 @@
-﻿using Oesia.Infrastructure.DTOs;
+﻿using AutoMapper;
+using Oesia.Infrastructure.DTOs;
 using Oesia.Repository.Interfaces;
 using Oesia.Service.Interfaces;
 using System.Collections.Generic;
@@ -11,19 +12,21 @@ namespace Oesia.Service.Services
 
         #region Members Variables
         private readonly IStateRepository _repository;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public StateService(IStateRepository repository)
+        public StateService(IStateRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         #endregion
 
         #region PublicMethods
-        public Task<IEnumerable<StateDTO>> GetAllStates()
+        public async Task<IEnumerable<StateDTO>> GetAllStates()
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<IEnumerable<StateDTO>>(await _repository.GetAllStates());
         }
         #endregion
     }

@@ -1,4 +1,5 @@
-﻿using Oesia.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Oesia.Domain.Entities;
 using Oesia.Repository.Data;
 using Oesia.Repository.Interfaces;
 using System.Collections.Generic;
@@ -20,9 +21,10 @@ namespace Oesia.Repository.Repository
         #endregion
 
         #region PublicMethods
-        public Task<IEnumerable<TbCity>> GetAllCities()
+        public async Task<IEnumerable<TbCity>> GetAllCities()
         {
-            throw new System.NotImplementedException();
+            return await _context.TbCities.FromSqlRaw("EXEC spr_getAllCities").ToListAsync();
+
         }
         #endregion
     }
